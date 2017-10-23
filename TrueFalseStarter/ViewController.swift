@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
     
-    var gameSound: SystemSoundID = 0
+    
     
     let trivia: [[String : String]] = [
         ["Question": "Only female koalas can whistle", "Answer": "False"],
@@ -34,9 +34,13 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadGameStartSound()
+        // gameStartSound refers to the GameSounds struct on the GameSounds file.
+        let gameStartSound = GameSounds()
+        
+        gameStartSound.loadGameStartSound()
         // Start game
-        playGameStartSound()
+        gameStartSound.playGameStartSound()
+        
         displayQuestion()
     }
 
@@ -117,14 +121,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func loadGameStartSound() {
-        let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
-        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
-        AudioServicesCreateSystemSoundID(soundURL as CFURL, &gameSound)
-    }
     
-    func playGameStartSound() {
-        AudioServicesPlaySystemSound(gameSound)
-    }
 }
 
