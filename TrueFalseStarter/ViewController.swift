@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var indexOfSelectedQuestion: Int = 0
     
     //Separated array into seperate file
-    let triviaProvider = TriviaProvider()
+    var triviaProvider = TriviaProvider()
     
     
    
@@ -46,12 +46,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: triviaProvider.trivia.count)
-        let questionDictionary = triviaProvider.trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary["Question"]
-        playAgainButton.isHidden = true
+    @IBAction func displayQuestion() {
+        questionField.text = triviaProvider.randomTrivia()
     }
+
     
     func displayScore() {
         // Hide the answer buttons
@@ -69,8 +67,8 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = triviaProvider.trivia[indexOfSelectedQuestion]
-        let correctAnswer = selectedQuestionDict["Answer"]
+        //let selectedQuestionDict = triviaProvider.trivia[indexOfSelectedQuestion]
+        let correctAnswer = triviaProvider.triviaAnswer()
         
         if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
             correctQuestions += 1
