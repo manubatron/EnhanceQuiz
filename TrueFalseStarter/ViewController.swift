@@ -12,13 +12,15 @@ import AudioToolbox
 
 class ViewController: UIViewController {
     
-    let questionsPerRound = 4
+    //Separated array into seperate file and question/answer functions.
+    var triviaProvider = TriviaProvider()
+    
+    let questionsPerRound = 0
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
     
-    //Separated array into seperate file
-    var triviaProvider = TriviaProvider()
+    
     
     
    
@@ -32,7 +34,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // gameStartSound refers to the GameSounds struct on the GameSounds file.
-        var gameStartSound = GameSounds()
+        let gameStartSound = GameSounds()
         
         gameStartSound.loadGameStartSound()
         // Start game
@@ -77,12 +79,13 @@ class ViewController: UIViewController {
             questionField.text = "Sorry, wrong answer!"
         }
         
-        loadNextRoundWithDelay(seconds: 2)
+        loadNextRoundWithDelay(seconds: 5)
+        // Code to display seconds till next question here...
     }
     
     func nextRound() {
         if questionsAsked == questionsPerRound {
-            // Game is over
+            // Game is over -> Play sound here
             displayScore()
         } else {
             // Continue game
@@ -92,6 +95,7 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain() {
         // Show the answer buttons
+        // Sound and countdown signaling second round
         trueButton.isHidden = false
         falseButton.isHidden = false
         

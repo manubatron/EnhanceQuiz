@@ -11,10 +11,10 @@ import GameKit
 import AudioToolbox
 
 // Struct to hold the sound features of the app.
-struct GameSounds {
+class GameSounds {
     var gameSound: SystemSoundID = 0
     
-    mutating func loadGameStartSound() {
+    func loadGameStartSound() {
         
         let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
         let soundURL = URL(fileURLWithPath: pathToSoundFile!)

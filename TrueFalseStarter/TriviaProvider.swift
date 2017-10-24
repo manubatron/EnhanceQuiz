@@ -8,7 +8,7 @@
 
 import GameKit
 
-struct TriviaProvider {
+class TriviaProvider {
 
     let trivia: [[String : String]] = [
         ["Question": "Only female koalas can whistle", "Answer": "False"],
@@ -16,6 +16,12 @@ struct TriviaProvider {
         ["Question": "Camels are cannibalistic", "Answer": "False"],
         ["Question": "All ducks are birds", "Answer": "True"]
     ]
+    
+    
+    func triviaCounter() -> Int {
+        let triviaCount: Int = trivia.count
+        return triviaCount
+    }
     
     // Function to determine the index number of the array
     func indexGenerator() -> Int {
@@ -26,13 +32,13 @@ struct TriviaProvider {
     }
     
     // Function to determine the question
-    mutating func randomTrivia() -> String {
+    func randomTrivia() -> String {
         return trivia[indexGenerator()]["Question"]!
         
     }
     
     // Function to determine the answer
-    mutating func triviaAnswer() -> String {
+    func triviaAnswer() -> String {
         return trivia[indexGenerator()]["Answer"]!
         
     }
