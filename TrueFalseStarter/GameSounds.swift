@@ -14,7 +14,7 @@ import AudioToolbox
 struct GameSounds {
     var gameSound: SystemSoundID = 0
     
-    func loadGameStartSound() {
+    mutating func loadGameStartSound() {
         
         let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
         let soundURL = URL(fileURLWithPath: pathToSoundFile!)
