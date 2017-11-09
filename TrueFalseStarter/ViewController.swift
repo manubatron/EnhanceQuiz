@@ -15,20 +15,17 @@ class ViewController: UIViewController {
     //Separated array into seperate file and question/answer functions.
     var triviaProvider = TriviaProvider()
     
-    let questionsPerRound = 0
-    var questionsAsked = 0
-    var correctQuestions = 0
-    var indexOfSelectedQuestion: Int = 0
-    
-    
-    
-    
+    // Functions for the Game
+    var gameFunctions = GameFunctions()
    
     
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var answerButton1: UIButton!
+    @IBOutlet weak var answerButton2: UIButton!
+    @IBOutlet weak var answerButton3: UIButton!
+    @IBOutlet weak var answerButton4: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
+    
     
 
     override func viewDidLoad() {
@@ -48,77 +45,53 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func displayQuestion() {
-        questionField.text = triviaProvider.randomTrivia()
+    func displayQuestion() {
+        questionField.text = triviaProvider.randomTrivia(indexVariable: gameFunctions.indexOfQuestion)
+        answerButton1.setTitle("\(triviaProvider.questionAnswers1(indexVariable: gameFunctions.indexOfQuestion))", for: .normal)
+        answerButton2.setTitle("\(triviaProvider.questionAnswers2(indexVariable: gameFunctions.indexOfQuestion))", for: .normal)
+        answerButton3.setTitle("\(triviaProvider.questionAnswers3(indexVariable: gameFunctions.indexOfQuestion))", for: .normal)
+        answerButton4.setTitle("\(triviaProvider.questionAnswers4(indexVariable: gameFunctions.indexOfQuestion))", for: .normal)
     }
+    
 
     
     func displayScore() {
         // Hide the answer buttons
-        trueButton.isHidden = true
-        falseButton.isHidden = true
-        
+        answerButton1.isHidden = true
+        answerButton2.isHidden = true
+        answerButton3.isHidden = true
+        answerButton4.isHidden = true
         // Display play again button
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+        questionField.text = gameFunctions.displayScore()
         
     }
     
-    @IBAction func checkAnswer(_ sender: UIButton) {
-        // Increment the questions asked counter
-        questionsAsked += 1
+    @IBAction func checkAnswer(_ playerAnswer: UIButton) {
+
+
+        let buttonValue = playerAnswer.titleLabel?.text
         
-        //let selectedQuestionDict = triviaProvider.trivia[indexOfSelectedQuestion]
-        let correctAnswer = triviaProvider.triviaAnswer()
+        questionField.text = gameFunctions.checkAnswer(quizAnswer: buttonValue!)
         
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
-            correctQuestions += 1
-            questionField.text = "Correct!"
-        } else {
-            questionField.text = "Sorry, wrong answer!"
-        }
         
-        loadNextRoundWithDelay(seconds: 5)
         // Code to display seconds till next question here...
     }
     
-    func nextRound() {
-        if questionsAsked == questionsPerRound {
-            // Game is over -> Play sound here
-            displayScore()
-        } else {
-            // Continue game
-            displayQuestion()
-        }
-    }
     
     @IBAction func playAgain() {
         // Show the answer buttons
         // Sound and countdown signaling second round
-        trueButton.isHidden = false
-        falseButton.isHidden = false
+        answerButton1.isHidden = false
+        answerButton2.isHidden = false
+        answerButton3.isHidden = false
+        answerButton4.isHidden = false
         
-        questionsAsked = 0
-        correctQuestions = 0
-        nextRound()
+        gameFunctions.playAgain()
+        
     }
-    
 
-    
-    // MARK: Helper Methods
-    
-    func loadNextRoundWithDelay(seconds: Int) {
-        // Converts a delay in seconds to nanoseconds as signed 64 bit integer
-        let delay = Int64(NSEC_PER_SEC * UInt64(seconds))
-        // Calculates a time value to execute the method given current time and delay
-        let dispatchTime = DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)
-        
-        // Executes the nextRound method at the dispatch time on the main queue
-        DispatchQueue.main.asyncAfter(deadline: dispatchTime) {
-            self.nextRound()
-        }
-    }
     
     
 }
