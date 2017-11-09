@@ -10,7 +10,7 @@ import UIKit
 import GameKit
 import AudioToolbox
 
-// Struct to hold the sound features of the app.
+// Class to hold the sound features of the app.
 class GameSounds {
     var gameSound: SystemSoundID = 0
     

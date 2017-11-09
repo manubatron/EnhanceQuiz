@@ -20,6 +20,8 @@ var correctQuestions = 0
 
 class GameFunctions {
     
+    // The idea of having this index generated here... is to make it so there is only one instance of an index being accessed, as opposed to potentially having different indexes produced from having multiple calls to the index function.
+    
     var indexOfQuestion = triviaProvider.indexGenerator()
     
     // function to determine the amount of answers correct
@@ -28,14 +30,13 @@ class GameFunctions {
        let playerScore = "Way to go! You got \(correctQuestions) out of \(triviaCounter) correct!"
         
         return playerScore
-        // code to play game sound goes here
+        // code to play cool game sound goes here
         
     }
 
     
-    // substituted check answer function to include logic for 3 or 4 answer, questions
+    // substituted check answer function to include logic for 4 answer, questions
     func checkAnswer(quizAnswer answer: String) -> String {
-        
         
         
         let correctAnswer = triviaProvider.triviaAnswer(indexVariable: indexOfQuestion )
@@ -45,6 +46,7 @@ class GameFunctions {
             correctQuestions += 1
             resultMessage = "Correct!"
             triviaProvider.triviaSorter(indexVariable: indexOfQuestion)
+            // This next index function call should in theory generate a new index...
             indexOfQuestion = triviaProvider.indexGenerator()
             loadNextRoundWithDelay(seconds: 5)
         } else {
