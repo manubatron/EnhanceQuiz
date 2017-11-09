@@ -45,6 +45,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // Function should be pulling an question from the array with the index generated on the game functions page. The titles for each button should change as well depending on each index generated... However I cannot figure out why the next question always results in nil. (╯°□°）╯︵ ┻━┻
     func displayQuestion() {
         questionField.text = triviaProvider.randomTrivia(indexVariable: gameFunctions.indexOfQuestion)
         answerButton1.setTitle("\(triviaProvider.questionAnswers1(indexVariable: gameFunctions.indexOfQuestion))", for: .normal)
@@ -61,6 +62,7 @@ class ViewController: UIViewController {
         answerButton2.isHidden = true
         answerButton3.isHidden = true
         answerButton4.isHidden = true
+        
         // Display play again button
         playAgainButton.isHidden = false
         
@@ -68,21 +70,19 @@ class ViewController: UIViewController {
         
     }
     
+    // function should convert the button selected into a variable to determine the correct answer
     @IBAction func checkAnswer(_ playerAnswer: UIButton) {
 
 
         let buttonValue = playerAnswer.titleLabel?.text
         
         questionField.text = gameFunctions.checkAnswer(quizAnswer: buttonValue!)
-        
-        
-        // Code to display seconds till next question here...
+
     }
     
-    
+    // Refers to the function in gamefunctions to play again.
     @IBAction func playAgain() {
-        // Show the answer buttons
-        // Sound and countdown signaling second round
+
         answerButton1.isHidden = false
         answerButton2.isHidden = false
         answerButton3.isHidden = false
